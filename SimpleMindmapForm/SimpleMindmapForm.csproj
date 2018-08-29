@@ -46,9 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ITreeNode.cs" />
     <Compile Include="Controllers\NodeController.cs" />
-    <Compile Include="Controllers\TreeNodeBase.cs" />
     <Compile Include="SimpleMindmapForm.cs">
       <SubType>Form</SubType>
     </Compile>

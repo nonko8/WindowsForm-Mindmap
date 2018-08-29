@@ -17,7 +17,6 @@ namespace SimpleMindmapForm
         private const int NodeHeight = 50;
         private const int NodeX = 10;
         private const int NodeY = 10;
-        private Rectangle nodeRectangle = new Rectangle(NodeX, NodeY, NodeWidth, NodeHeight);
         private NodeController rootNode = new NodeController(NodeX, NodeY, NodeWidth, NodeHeight);
         private NodeController selectedNode = null;
 
@@ -25,8 +24,8 @@ namespace SimpleMindmapForm
         {
             InitializeComponent();
 
-            selectedNode = rootNode;
             pictureBox.Image = new Bitmap(pictureBox.ClientRectangle.Width, pictureBox.ClientRectangle.Height);
+            selectedNode = rootNode;
             DrawNode(rootNode);
         }
 
@@ -49,28 +48,27 @@ namespace SimpleMindmapForm
                     pen = pRed;
                 }
 
-                //g = CreateGraphics();
                 if (!isRecursion)
                 {
                     g.Clear(Color.White);
                 }
-                nodeRectangle = new Rectangle(node.X, node.Y, NodeWidth, NodeHeight);
+
+                var nodeRectangle = new Rectangle(node.X, node.Y, NodeWidth, NodeHeight);
+
                 g.FillEllipse(brush, nodeRectangle);
                 g.DrawEllipse(pen, nodeRectangle);
-
                 if (node.Parent != null)
                 {
                     g.DrawLine(pBlack, node.Parent.EndPoint(), node.StartPoint());
                 }
-
                 g.DrawString(node.Text, font, bBlack, node.TextPoint(TextRenderer.MeasureText(g, node.Text, font)));
+
                 foreach (var n in node.Children)
                 {   
                     DrawNode(n, true);
                 }
             }
 
-            // PictureBoxを再描画させて画面に反映
             pictureBox.Invalidate();
         }
 
@@ -85,10 +83,10 @@ namespace SimpleMindmapForm
 
         private void DeleteNodeButton_Click(object sender, EventArgs e)
         {
-            if (selectedNode != null && selectedNode.Parent != null)
+            if (selectedNode?.Parent != null)
             {
                 selectedNode.Remove(selectedNode);
-                selectedNode = null;
+                selectedNode = rootNode;
                 DrawNode(rootNode);
             }
         }
@@ -108,19 +106,22 @@ namespace SimpleMindmapForm
             if (selectedNode == null)
             {
                 editNodeText.Text = "";
-                pictureBox.Select();
                 return;
             }
             editNodeText.Text = selectedNode.Text;
             DrawNode(rootNode);
-
-            //ドラッグを開始する
-            DoDragDrop(Graphics.FromImage(pictureBox.Image), DragDropEffects.All);
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
         {
+            if (selectedNode == null || rootNode.GetPosition(e.X, e.Y) == selectedNode)
+            {
+                return;
+            }
 
+            selectedNode.X = e.X;
+            selectedNode.Y = e.Y;
+            DrawNode(rootNode);
         }
     }
 }

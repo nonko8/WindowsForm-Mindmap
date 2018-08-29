@@ -138,7 +138,6 @@ namespace SimpleMindmapForm.Controllers
 
         public NodeController Remove(NodeController node)
         {
-            //node = node.GetRoot();
             node.Parent.Children.Remove(node);
             node.Parent = this;
             return node;
