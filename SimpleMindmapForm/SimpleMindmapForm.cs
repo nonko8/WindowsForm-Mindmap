@@ -19,10 +19,10 @@ namespace SimpleMindmapForm
 
             pictureBox.Image = new Bitmap(pictureBox.ClientRectangle.Width, pictureBox.ClientRectangle.Height);
             selectedNode = rootNode;
-            DrawNode(rootNode);
+            Draw(rootNode);
         }
 
-        private void DrawNode(NodeController node, bool isRecursion = false)
+        private void Draw(NodeController node, bool isRecursion = false)
         {
             using (var bBlack = new SolidBrush(Color.Black))
             using (var bWhite = new SolidBrush(Color.White))
@@ -58,7 +58,7 @@ namespace SimpleMindmapForm
 
                 foreach (var n in node.Children)
                 {   
-                    DrawNode(n, true);
+                    Draw(n, true);
                 }
             }
 
@@ -70,7 +70,7 @@ namespace SimpleMindmapForm
             if (selectedNode != null)
             {
                 selectedNode.Add();
-                DrawNode(rootNode);
+                Draw(rootNode);
             }
         }
 
@@ -80,7 +80,7 @@ namespace SimpleMindmapForm
             {
                 selectedNode.Remove(selectedNode);
                 selectedNode = rootNode;
-                DrawNode(rootNode);
+                Draw(rootNode);
             }
         }
 
@@ -90,7 +90,7 @@ namespace SimpleMindmapForm
             {
                 selectedNode.Text = editNodeText.Text;
             }
-            DrawNode(rootNode);
+            Draw(rootNode);
         }
 
         private void PictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -102,7 +102,7 @@ namespace SimpleMindmapForm
                 return;
             }
             editNodeText.Text = selectedNode.Text;
-            DrawNode(rootNode);
+            Draw(rootNode);
         }
 
         private void PictureBox_MouseUp(object sender, MouseEventArgs e)
@@ -114,7 +114,7 @@ namespace SimpleMindmapForm
 
             selectedNode.X = e.X;
             selectedNode.Y = e.Y;
-            DrawNode(rootNode);
+            Draw(rootNode);
         }
     }
 }
