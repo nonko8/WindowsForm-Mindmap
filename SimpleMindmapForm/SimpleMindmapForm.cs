@@ -13,11 +13,10 @@ namespace SimpleMindmapForm
 {
     public partial class SimpleMaindmapForm : Form
     {
-        private const int NodeWidth = 100;
-        private const int NodeHeight = 50;
-        private const int NodeX = 10;
-        private const int NodeY = 10;
-        private NodeController rootNode = new NodeController(NodeX, NodeY, NodeWidth, NodeHeight);
+        private NodeController rootNode = new NodeController(
+                                                NodeController.NodeX, NodeController.NodeY,
+                                                NodeController.NodeWidth, NodeController.NodeHeight
+                                              );
         private NodeController selectedNode = null;
 
         public SimpleMaindmapForm()
@@ -53,7 +52,7 @@ namespace SimpleMindmapForm
                     g.Clear(Color.White);
                 }
 
-                var nodeRectangle = new Rectangle(node.X, node.Y, NodeWidth, NodeHeight);
+                var nodeRectangle = new Rectangle(node.X, node.Y, NodeController.NodeWidth, NodeController.NodeHeight);
 
                 g.FillEllipse(brush, nodeRectangle);
                 g.DrawEllipse(pen, nodeRectangle);

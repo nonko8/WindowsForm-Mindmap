@@ -9,8 +9,11 @@ namespace SimpleMindmapForm.Controllers
 {
     class NodeController
     {
-        private const int NodeX = 10;
-        private const int NodeY = 10;
+        public const int NodeWidth = 100;
+        public const int NodeHeight = 50;
+        public const int NodeX = 10;
+        public const int NodeY = 10;
+
         public NodeController(int x, int y, int width, int height)
         {
             X = x;
